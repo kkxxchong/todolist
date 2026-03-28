@@ -54,6 +54,20 @@ export default function Home() {
     setTodos(todos.filter((todo) => todo.id !== id));
   };
 
+  const editTodo = (id: number, newText: string, newColor?: ColorName) => {
+    setTodos(
+      todos.map((todo) =>
+        todo.id === id
+          ? {
+              ...todo,
+              text: newText.trim(),
+              color: newColor,
+            }
+          : todo
+      )
+    );
+  };
+
   const completedCount = todos.filter((t) => t.completed).length;
   const totalCount = todos.length;
 
@@ -141,7 +155,12 @@ export default function Home() {
             </div>
           )}
 
-          <TodoList todos={todos} onToggle={toggleTodo} onDelete={deleteTodo} />
+          <TodoList
+          todos={todos}
+          onToggle={toggleTodo}
+          onDelete={deleteTodo}
+          onEdit={editTodo}
+        />
         </div>
 
         {/* Footer */}

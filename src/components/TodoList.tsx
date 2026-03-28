@@ -1,15 +1,16 @@
 'use client';
 
-import { Todo } from '@/types/todo';
+import { Todo, ColorName } from '@/types/todo';
 import TodoItem from './TodoItem';
 
 interface TodoListProps {
   todos: Todo[];
   onToggle: (id: number) => void;
   onDelete: (id: number) => void;
+  onEdit: (id: number, newText: string, newColor?: ColorName) => void;
 }
 
-export default function TodoList({ todos, onToggle, onDelete }: TodoListProps) {
+export default function TodoList({ todos, onToggle, onDelete, onEdit }: TodoListProps) {
   if (todos.length === 0) {
     return (
       <div className="text-center py-16 animate-enter">
@@ -46,7 +47,12 @@ export default function TodoList({ todos, onToggle, onDelete }: TodoListProps) {
           style={{ animationDelay: `${index * 50}ms` }}
           className="animate-enter"
         >
-          <TodoItem todo={todo} onToggle={onToggle} onDelete={onDelete} />
+          <TodoItem
+            todo={todo}
+            onToggle={onToggle}
+            onDelete={onDelete}
+            onEdit={onEdit}
+          />
         </div>
       ))}
     </div>
