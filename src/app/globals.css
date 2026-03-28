@@ -1,0 +1,88 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: #f8fafc;
+    --foreground: #0f172a;
+    --primary: #6366f1;
+    --primary-hover: #4f46e5;
+    --muted: #f1f5f9;
+    --muted-foreground: #64748b;
+    --border: #e2e8f0;
+    --ring: #6366f1;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --background: #0f172a;
+      --foreground: #f1f5f9;
+      --primary: #818cf8;
+      --primary-hover: #6366f1;
+      --muted: #1e293b;
+      --muted-foreground: #94a3b8;
+      --border: #334155;
+      --ring: #818cf8;
+    }
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply px-6 py-3 bg-gradient-to-r from-indigo-500 to-purple-600 text-white rounded-xl font-medium shadow-lg hover:from-indigo-600 hover:to-purple-700 hover:shadow-xl transform hover:-translate-y-0.5 transition-all duration-200 active:translate-y-0;
+  }
+
+  .btn-danger {
+    @apply px-4 py-2 bg-gradient-to-r from-red-500 to-pink-600 text-white rounded-lg font-medium shadow hover:from-red-600 hover:to-pink-700 transition-all duration-200;
+  }
+
+  .input-field {
+    @apply w-full px-5 py-4 bg-white dark:bg-slate-800 border-2 border-slate-200 dark:border-slate-700 rounded-xl text-slate-900 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all duration-200 shadow-sm;
+  }
+
+  .todo-item {
+    @apply flex items-center gap-4 p-5 bg-white dark:bg-slate-800/50 backdrop-blur-sm border border-slate-200 dark:border-slate-700 rounded-2xl shadow-sm hover:shadow-md transition-all duration-200;
+  }
+
+  .todo-checkbox {
+    @apply w-6 h-6 rounded-full border-2 border-slate-300 dark:border-slate-600 checked:bg-gradient-to-br checked:from-indigo-500 checked:to-purple-600 checked:border-transparent focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 cursor-pointer transition-all duration-200;
+  }
+
+  .color-picker {
+    @apply flex gap-2 p-2 bg-slate-100 dark:bg-slate-700/50 rounded-xl;
+  }
+
+  .color-option {
+    @apply w-8 h-8 rounded-full cursor-pointer ring-2 ring-transparent hover:ring-slate-300 dark:hover:ring-slate-500 transition-all duration-200;
+  }
+
+  .color-option.selected {
+    @apply ring-2 ring-slate-900 dark:ring-slate-100;
+  }
+
+  .todo-color-tag {
+    @apply w-4 h-4 rounded-full flex-shrink-0 ring-2 ring-white dark:ring-slate-800;
+  }
+}
+
+@layer utilities {
+  .text-gradient {
+    @apply bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent;
+  }
+
+  .animate-enter {
+    animation: enter 0.3s ease-out;
+  }
+}
+
+@keyframes enter {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
