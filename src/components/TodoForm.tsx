@@ -5,11 +5,13 @@ import { Todo, COLOR_OPTIONS, ColorName } from '@/types/todo';
 
 interface TodoFormProps {
   onAdd: (text: string, color?: ColorName) => void;
+  inputRef?: React.RefObject<HTMLInputElement | null>;
+  isFocused?: boolean;
+  onFocusChange?: (focused: boolean) => void;
 }
 
-export default function TodoForm({ onAdd }: TodoFormProps) {
+export default function TodoForm({ onAdd, inputRef, isFocused = false, onFocusChange }: TodoFormProps) {
   const [text, setText] = useState('');
-  const [isFocused, setIsFocused] = useState(false);
   const [selectedColor, setSelectedColor] = useState<ColorName>('none');
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -17,7 +19,7 @@ export default function TodoForm({ onAdd }: TodoFormProps) {
     if (text.trim()) {
       onAdd(text.trim(), selectedColor === 'none' ? undefined : selectedColor);
       setText('');
-      setIsFocused(false);
+      onFocusChange?.(false);
       setSelectedColor('none');
     }
   };
@@ -26,32 +28,23 @@ export default function TodoForm({ onAdd }: TodoFormProps) {
     <form onSubmit={handleSubmit} className="mb-8">
       <div className={`flex gap-3 mb-4 transition-all duration-200 ${isFocused ? 'scale-[1.02]' : ''}`}>
         <input
+          ref={inputRef}
           type="text"
           value={text}
           onChange={(e) => setText(e.target.value)}
-          onFocus={() => setIsFocused(true)}
-          onBlur={() => setIsFocused(false)}
-          placeholder="添加新任务...按 Enter 提交"
-          className="input-field flex-1 text-lg"
+          onFocus={() => onFocusChange?.(true)}
+          onBlur={() => onFocusChange?.(false)}
+          placeholder="添加新任务... 按 Enter 提交"
+          className="input-field flex-1 text-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
           autoFocus
         />
         <button
           type="submit"
           disabled={!text.trim()}
-          className="btn-primary flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
+          className="btn-primary flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none hover:scale-105 active:scale-95 transition-all duration-200 shadow-lg hover:shadow-indigo-500/50"
         >
-          <svg
-            className="w-5 h-5"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M12 6v6m0 0v6m0-6h6m-6 0H6"
-            />
+          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
           </svg>
           <span>添加</span>
         </button>
@@ -78,12 +71,7 @@ export default function TodoForm({ onAdd }: TodoFormProps) {
                 </svg>
               ) : (
                 <div className="w-full h-full flex items-center justify-center">
-                  <svg
-                    className="w-4 h-4 text-slate-400"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
+                  <svg className="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
                   </svg>
                 </div>
